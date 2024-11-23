@@ -3,14 +3,13 @@
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE HTML><html>
 <head>
-  <title>Eddie's Web Server</title>
+  <title>Backyard Sparkle Lights</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
   %CSS_CODE%
   </style>
 </head>
 <body>
-  <h2>Eddie's Web Server</h2>
   <p>
   %BOUNCE%
   <p id="output"></p>

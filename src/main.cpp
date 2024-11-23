@@ -1,4 +1,3 @@
-
 #include <Arduino.h>
 #include <FastLED.h>
 #include <WiFi.h>
@@ -7,6 +6,7 @@
 #include "arduino-secrets.h"
 #include <TemplatePrinter.h>
 #include "string_constants.h"
+#include "color_palettes.h"
 
 #define DATA_PIN_1    27
 #define DATA_PIN_2    33
@@ -23,22 +23,19 @@
 
 CRGBArray<NUM_LEDS_1> leds_1;
 CRGBArray<NUM_LEDS_2> leds_2;
-bool debug = true;
 
-// List of patterns to cycle through.  Each is defined as a separate function below.
-//typedef void (*SimplePatternList[])();
-// SimplePatternList gPatterns = { rainbow, rainbowWithGlitter, confetti, sinelon, juggle, bpm };
-//SimplePatternList gPatterns = { rainbow, rainbowWithGlitter, confetti, sinelon };
-String gButtonClicked = "off";
+String gButtonClicked = "off"; // Start the system at "off"
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 111; // rotating "base color" used by many of the patterns
 int gLoopCounter = 0;
+
+bool debug = true;
 
 // Set web server port number to 80
 WiFiServer gWiFiServer(80);
 
 // Variable to store the HTTP request
-String header;
+String gHeader;
 
 
 
@@ -253,107 +250,6 @@ CRGB computeOneTwinkle( uint32_t ms, uint8_t salt)
   return c;
 }
 
-// A mostly red palette with green accents and white trim.
-// "CRGB::Gray" is used as white to keep the brightness more uniform.
-const TProgmemRGBPalette16 RedGreenWhite_p FL_PROGMEM =
-{  CRGB::Red, CRGB::Red, CRGB::Red, CRGB::Red, 
-   CRGB::Red, CRGB::Red, CRGB::Red, CRGB::Red, 
-   CRGB::Red, CRGB::Red, CRGB::Gray, CRGB::Gray, 
-   CRGB::Green, CRGB::Green, CRGB::Green, CRGB::Green };
-
-// A mostly (dark) green palette with red berries.
-#define Holly_Green 0x00580c
-#define Holly_Red   0xB00402
-const TProgmemRGBPalette16 Holly_p FL_PROGMEM =
-{  Holly_Green, Holly_Green, Holly_Green, Holly_Green, 
-   Holly_Green, Holly_Green, Holly_Green, Holly_Green, 
-   Holly_Green, Holly_Green, Holly_Green, Holly_Green, 
-   Holly_Green, Holly_Green, Holly_Green, Holly_Red 
-};
-
-// A red and white striped palette
-// "CRGB::Gray" is used as white to keep the brightness more uniform.
-const TProgmemRGBPalette16 RedWhite_p FL_PROGMEM =
-{  CRGB::Red,  CRGB::Red,  CRGB::Red,  CRGB::Red, 
-   CRGB::Gray, CRGB::Gray, CRGB::Gray, CRGB::Gray,
-   CRGB::Red,  CRGB::Red,  CRGB::Red,  CRGB::Red, 
-   CRGB::Gray, CRGB::Gray, CRGB::Gray, CRGB::Gray };
-
-// A mostly blue palette with white accents.
-// "CRGB::Gray" is used as white to keep the brightness more uniform.
-const TProgmemRGBPalette16 BlueWhite_p FL_PROGMEM =
-{  CRGB::Blue, CRGB::Blue, CRGB::Blue, CRGB::Blue, 
-   CRGB::Blue, CRGB::Blue, CRGB::Blue, CRGB::Blue, 
-   CRGB::Blue, CRGB::Blue, CRGB::Blue, CRGB::Blue, 
-   CRGB::Blue, CRGB::Gray, CRGB::Gray, CRGB::Gray };
-
-// A pure "fairy light" palette with some brightness variations
-#define HALFFAIRY ((CRGB::FairyLight & 0xFEFEFE) / 2)
-#define QUARTERFAIRY ((CRGB::FairyLight & 0xFCFCFC) / 4)
-const TProgmemRGBPalette16 FairyLight_p FL_PROGMEM =
-{  CRGB::FairyLight, CRGB::FairyLight, CRGB::FairyLight, CRGB::FairyLight, 
-   HALFFAIRY,        HALFFAIRY,        CRGB::FairyLight, CRGB::FairyLight, 
-   QUARTERFAIRY,     QUARTERFAIRY,     CRGB::FairyLight, CRGB::FairyLight, 
-   CRGB::FairyLight, CRGB::FairyLight, CRGB::FairyLight, CRGB::FairyLight };
-
-// A palette of soft snowflakes with the occasional bright one
-const TProgmemRGBPalette16 Snow_p FL_PROGMEM =
-{  0x304048, 0x304048, 0x304048, 0x304048,
-   0x304048, 0x304048, 0x304048, 0x304048,
-   0x304048, 0x304048, 0x304048, 0x304048,
-   0x304048, 0x304048, 0x304048, 0xE0F0FF };
-
-// A palette reminiscent of large 'old-school' C9-size tree lights
-// in the five classic colors: red, orange, green, blue, and white.
-#define C9_Red    0xB80400
-#define C9_Orange 0x902C02
-#define C9_Green  0x046002
-#define C9_Blue   0x070758
-#define C9_White  0x606820
-const TProgmemRGBPalette16 RetroC9_p FL_PROGMEM =
-{  C9_Red,    C9_Orange, C9_Red,    C9_Orange,
-   C9_Orange, C9_Red,    C9_Orange, C9_Red,
-   C9_Green,  C9_Green,  C9_Green,  C9_Green,
-   C9_Blue,   C9_Blue,   C9_Blue,
-   C9_White
-};
-
-// A cold, icy pale blue palette
-#define Ice_Blue1 0x0C1040
-#define Ice_Blue2 0x182080
-#define Ice_Blue3 0x5080C0
-const TProgmemRGBPalette16 Ice_p FL_PROGMEM =
-{
-  Ice_Blue1, Ice_Blue1, Ice_Blue1, Ice_Blue1,
-  Ice_Blue1, Ice_Blue1, Ice_Blue1, Ice_Blue1,
-  Ice_Blue1, Ice_Blue1, Ice_Blue1, Ice_Blue1,
-  Ice_Blue2, Ice_Blue2, Ice_Blue2, Ice_Blue3
-};
-
-#define Black_1 0x000000
-const TProgmemRGBPalette16 Black_p FL_PROGMEM = {
-  Black_1, Black_1, Black_1, Black_1,
-  Black_1, Black_1,Black_1, Black_1,
-  Black_1, Black_1,Black_1, Black_1,
-  Black_1, Black_1,Black_1, Black_1,
-};
-
-// Add or remove palette names from this list to control which color
-// palettes are used, and in what order.
-const TProgmemRGBPalette16* ActivePaletteList[] = {
-  &RetroC9_p,
-  &BlueWhite_p,
-  &RainbowColors_p,
-  &FairyLight_p,
-  &RedGreenWhite_p,
-  &PartyColors_p,
-  &RedWhite_p,
-  &Snow_p,
-  &Holly_p,
-  &Ice_p  
-};
-
-
 // Advance to the next color palette in the list (above).
 void chooseNextColorPalette( CRGBPalette16& pal)
 {
@@ -432,61 +328,6 @@ void drawTwinkles( CRGBSet& L)
 bool RadioProcessor (Print& output, const char *param){
   if (strcmp(param, "CSS_CODE")== 0){
     output.print (CSS_CODE);
-    Serial.println ("CSS");
-    return true;
-  }else if (strcmp (param, "BUTTONPLACEHOLDER") == 0){
-    output.print ("");
-    output.print ("<div class=\"radio-toolbar\">\n");
-    output.print ("<input type=\"radio\" id=\"off\" name=\"selector\" value=\"off\" ");
-    output.print (isThisOn("off"));
-    output.print (">\n");
-
-    output.print ("<label for=\"blue\">Off</label>\n");
-    output.print ("<input type=\"radio\" id=\"blue\" name=\"selector\" value=\"blue\" ");
-    output.print (isThisOn("blue"));
-    output.print (">\n");
-    output.print ("<label for=\"blue\">Blue</label>\n");
-
-    output.print ("<input type=\"radio\" id=\"green\" name=\"selector\" value=\"green\" ");
-    output.print (isThisOn("green"));
-    output.print (">\n");
-    output.print ("<label for=\"green\">Green</label>\n");
-
-    output.print ("<input type=\"radio\" id=\"red\" name=\"selector\" value=\"red\" ");
-    output.print (isThisOn("red"));
-    output.print (">\n");
-    output.print ("<label for=\"red\">Red</label>\n");
-    output.print ("<p>");
-    return true;
-  }else if (strcmp (param, "BUTTON_TWO")==0 ){
-    output.print("<div class='content'> \n <h3>Ripple animation on  input type radio and Checkbox</h3>");
-    output.print("<div class=\"dpx\">\n");
-    output.print("<div class=\'py\'>");
-    output.print("<label>");
-    output.print("<input type=\"radio\" class=\"option-input radio\" value=\"off\" name=\"Off\" ");
-    output.print (isThisOn("off"));
-    output.print("/>");
-    output.print("Off\n");
-    output.print ("</label>\n");
-    output.print("<label>");
-    output.print("<input type=\"radio\" class=\"option-input radio\" value=\"red\" name=\"Red\" ");
-    output.print (isThisOn("red"));
-    output.print("/>");
-    output.print("Red\n");
-    output.print ("</label>\n");
-    output.print("<label>");
-    output.print("<input type=\"radio\" class=\"option-input radio\" value=\"Green\" name=\"Green\" ");
-    output.print (isThisOn("green"));
-    output.print("/>");
-    output.print("Green\n");
-    output.print ("</label>\n");
-    output.print("<label>");
-    output.print("<input type=\"radio\" class=\"option-input radio\" value=\"blue\" name=\"Blue\" ");
-    output.print (isThisOn("blue"));
-    output.print("/>");
-    output.print("Blue\n");
-    output.print ("</label>\n");
-    output.print ("</div>\n</div>\n</div>\n");
     return true;
   }else if (strcmp (param, "BOUNCE")==0 ){
     output.print("<h3>Bouncing Animation</h3>");
@@ -510,15 +351,15 @@ bool RadioProcessor (Print& output, const char *param){
     output.print("<input type=\"radio\" class=\"radio\" id=\"radio-5\" name=\"selector\" value=\"yellow\"");
     output.print (isThisOn("yellow"));
     output.print("/>");
-    output.print("<label for=\"radio-5\">yellow</label>");
+    output.print("<label for=\"radio-5\"></label>");
     output.print("<input type=\"radio\" class=\"radio\" id=\"radio-6\" name=\"selector\" value=\"cyan\"");
     output.print (isThisOn("cyan"));
     output.print("/>");
-    output.print("<label for=\"radio-6\">cyan</label>");
+    output.print("<label for=\"radio-6\"></label>");
     output.print("<input type=\"radio\" class=\"radio\" id=\"radio-7\" name=\"selector\" value=\"white\"");
     output.print (isThisOn("white"));
     output.print("/>");
-    output.print("<label for=\"radio-7\">white</label>");
+    output.print("<label for=\"radio-7\"></label>");
     output.print ("</div>\n");
     return true;
   }else{
@@ -527,7 +368,7 @@ bool RadioProcessor (Print& output, const char *param){
 }
 
 
-void UpdatePattern (){
+void UpdatePalette (){
  if (gButtonClicked == "red"){
     gCurrentPalette = RetroC9_p;
   }else if (gButtonClicked == "blue"){
@@ -552,7 +393,6 @@ void DoTwinkle (){
 }
 
 void setup() {
-  
   // SET UP SERIAL
   Serial.begin(115200);
     while (!Serial) {
@@ -566,31 +406,23 @@ void setup() {
   FastLED.addLeds<LED_TYPE,DATA_PIN_1,COLOR_ORDER>(leds_1, NUM_LEDS_1).setCorrection(TypicalLEDStrip);
   FastLED.addLeds<LED_TYPE,DATA_PIN_2,COLOR_ORDER>(leds_2, NUM_LEDS_2).setCorrection(TypicalLEDStrip);  
   FastLED.setBrightness(BRIGHTNESS); // set master brightness control
-  //FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-  Serial.println("Before Show 1");
+  //Turn on 2 white LEDs so we know we're working.  
   leds_2[0] = CRGB::White;
   leds_1[0] = CRGB::White;
   FastLED.show();
-  Serial.println ("After Show 1");
+
   // SET UP WIFI 
    Connect_to_Wifi();  // Like it says
   if (debug) { Print_Wifi_Status(); }
   sleep (3);
-  Serial.println("Before Show 2");
-  FastLED.show();
-  Serial.println ("After Show 2");
   gWiFiServer.begin();
-  Serial.println ("After WifiServer Start, before Show 3");
-  FastLED.clear();
+  FastLED.clear(); //we're exiting the setup, which means we got a wifi connection and the server's started, so turn off those lights.  
   FastLED.show();
-  Serial.println ("After Show 3 ");
-
   Serial.println ("Exting setup");
   Serial.flush();
 }
 
 void loop() {
-  gHue++;
   WiFiClient client = gWiFiServer.available();   // Listen for incoming clients
   if (client) {                             // If a new client connects,
     currentTime = millis();
@@ -600,7 +432,7 @@ void loop() {
       currentTime = millis();
       if (client.available()) {             // if there's bytes to read from the client,
         char c = client.read();             // read a byte, then
-        header += c;
+        gHeader += c;
         if (c == '\n') {                    // if the byte is a newline character
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
@@ -613,64 +445,29 @@ void loop() {
             client.println();
 
             // Get info about which button was clicked and set the global variable for it.
-            if (header.indexOf("GET /update?color=off") >= 0) {
+            if (gHeader.indexOf("GET /update?color=off") >= 0) {
               gButtonClicked = "off";
-            }else if (header.indexOf("GET /update?color=red") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=red") >= 0) {
               gButtonClicked = "red";
-            }else if (header.indexOf("GET /update?color=blue") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=blue") >= 0) {
               gButtonClicked = "blue";
-            }else if (header.indexOf("GET /update?color=green") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=green") >= 0) {
               gButtonClicked = "green";
-            }else if (header.indexOf("GET /update?color=yellow") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=yellow") >= 0) {
               gButtonClicked = "yellow";
-            }else if (header.indexOf("GET /update?color=cyan") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=cyan") >= 0) {
               gButtonClicked = "cyan";
-            }else if (header.indexOf("GET /update?color=white") >= 0) {
+            }else if (gHeader.indexOf("GET /update?color=white") >= 0) {
               gButtonClicked = "white";
             }else{
               gButtonClicked = "off";
             }
             
-            // Display the HTML web page
+            // Display the HTML web page, using the TemplatePrinter to make it a little easier to deal with.
             TemplatePrinter printer(client, RadioProcessor);  
             printer.print (index_html);
             printer.flush();
-            
-/*            client.println("<!DOCTYPE html><html>");
-            client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-            client.println("<link rel=\"icon\" href=\"data:,\">");
-            // CSS to style the on/off buttons 
-            // Feel free to change the background-color and font-size attributes to fit your preferences
-            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
-            client.println(".button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;");
-            client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-            client.println(".button2 {background-color: #555555;}</style></head>");
-            
-            // Web Page Heading
-            client.println("<body><h1>ESP32 Web Server</h1>");
-            
-            // Display current state, and ON/OFF buttons for GPIO 26  
-            client.println("<p>GPIO 26 - State " + output26State + "</p>");
-            // If the output26State is off, it displays the ON button       
-            if (output26State=="off") {
-              client.println("<p><a href=\"/26/on\"><button class=\"button\">ON</button></a></p>");
-            } else {
-              client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
-            } 
-               
-            // Display current state, and ON/OFF buttons for GPIO 27  
-            client.println("<p>GPIO 27 - State " + output27State + "</p>");
-            // If the output27State is off, it displays the ON button       
-            if (output27State=="off") {
-              client.println("<p><a href=\"/27/on\"><button class=\"button\">ON</button></a></p>");
-            } else {
-              client.println("<p><a href=\"/27/off\"><button class=\"button button2\">OFF</button></a></p>");
-            }
-            client.println("</body></html>");
-            */
-            // The HTTP response ends with another blank line
             client.println();
-            // Break out of the while loop
             break;
           } else { // if you got a newline, then clear currentLine
             currentLine = "";
@@ -680,16 +477,13 @@ void loop() {
         }
       }
     }
-    // Clear the header variable
-    header = "";
+    // Clear the gHeader variable
+    gHeader = "";
     // Close the connection
     client.stop();
-    Serial.println("Client disconnected.");
-    Serial.println("");
   }
-
   
-  UpdatePattern();
+  UpdatePalette(); //based on what we know, set the palette properly.
   drawTwinkles(leds_1);
   drawTwinkles(leds_2);
   FastLED.show(); 
