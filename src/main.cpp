@@ -330,7 +330,6 @@ bool RadioProcessor (Print& output, const char *param){
     output.print (CSS_CODE);
     return true;
   }else if (strcmp (param, "BOUNCE")==0 ){
-    output.print("<h3>Bouncing Animation</h3>");
     output.print("<div class=\"container\"> ");
     output.print("<input type=\"radio\" class=\"radio\" id=\"radio-1\" name=\"selector\" value=\"off\"");
     output.print (isThisOn("off"));
@@ -459,8 +458,6 @@ void loop() {
               gButtonClicked = "cyan";
             }else if (gHeader.indexOf("GET /update?color=white") >= 0) {
               gButtonClicked = "white";
-            }else{
-              gButtonClicked = "off";
             }
             
             // Display the HTML web page, using the TemplatePrinter to make it a little easier to deal with.
