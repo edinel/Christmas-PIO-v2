@@ -400,7 +400,6 @@ void UpdatePalette (){
     gCurrentPalette = FairyLight_p;
   }else if (gButtonClicked == "orange"){
     gCurrentPalette = Halloween_p; 
-    Serial.println ("well ok");
   }else{ //we're in an unknown state or "off"
     gCurrentPalette = Black_p;
   }
