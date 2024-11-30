@@ -8,13 +8,15 @@
 #include "string_constants.h"
 #include "color_palettes.h"
 
+// #define TWO_STRINGS 1
+
+
 #define DATA_PIN_1    27
-#define DATA_PIN_2    33
+#define NUM_LEDS_1    1000
+
 #define LED_TYPE    WS2812
 #define COLOR_ORDER GRB
-#define NUM_LEDS_1    400
-#define NUM_LEDS_2    200
-#define BRIGHTNESS          255  
+#define BRIGHTNESS          125  
 #define FRAMES_PER_SECOND  120
 #define NUM_FUNCTIONS 4
 #define hostname "BackYard-Xmas-Arduino"
@@ -22,7 +24,13 @@
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 CRGBArray<NUM_LEDS_1> leds_1;
-CRGBArray<NUM_LEDS_2> leds_2;
+
+#ifdef TWO_STRINGS
+  #define NUM_LEDS_2    200
+  #define DATA_PIN_2    33
+  CRGBArray<NUM_LEDS_2> leds_2;
+#endif
+
 
 String gButtonClicked = "off"; // Start the system at "off"
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
@@ -43,7 +51,6 @@ String gHeader;
 // 0 (VERY slow) to 8 (VERY fast).  
 // 4, 5, and 6 are recommended, default is 4.
 #define TWINKLE_SPEED 2
-
 
 // Overall twinkle density.
 // 0 (NONE lit) to 8 (ALL lit at once).  
@@ -137,7 +144,9 @@ void rainbow()
 {
   // FastLED's built-in rainbow generator
   fill_rainbow( leds_1, NUM_LEDS_1, gHue, 7);
-  fill_rainbow( leds_2, NUM_LEDS_2, gHue, 7);
+  #ifdef TWO_STRINGS
+    fill_rainbow( leds_2, NUM_LEDS_2, gHue, 7);
+  #endif
   Serial.println ("Rainbow");
 }
 
@@ -145,7 +154,9 @@ void addGlitter( fract8 chanceOfGlitter)
 {
   if( random8() < chanceOfGlitter) {
     leds_1[ random16(NUM_LEDS_1) ] += CRGB::White;
-    leds_2[ random16(NUM_LEDS_2) ] += CRGB::White;
+    #ifdef TWO_STRINGS
+      leds_2[ random16(NUM_LEDS_2) ] += CRGB::White;
+    #endif
   }
 }
 
@@ -164,10 +175,11 @@ void confetti()
   int pos1 = random16(NUM_LEDS_1);
   leds_1[pos1] += CHSV( gHue + random8(64), 200, 255);
 
-  fadeToBlackBy( leds_2, NUM_LEDS_2, 10);
-  int pos2 = random16(NUM_LEDS_2);
-  leds_2[pos2] += CHSV( gHue + random8(64), 200, 255);
-  Serial.println ("Confetti");
+  #ifdef TWO_STRINGS
+    fadeToBlackBy( leds_2, NUM_LEDS_2, 10);
+    int pos2 = random16(NUM_LEDS_2);
+    leds_2[pos2] += CHSV( gHue + random8(64), 200, 255);
+  #endif
 }
 
 void sinelon()
@@ -176,11 +188,12 @@ void sinelon()
   fadeToBlackBy( leds_1, NUM_LEDS_1, 20);
   int pos1 = beatsin16( 13, 0, NUM_LEDS_1-1 );
   leds_1[pos1] += CHSV( gHue, 255, 192);
-
-  fadeToBlackBy( leds_2, NUM_LEDS_2, 20);
-  int pos2 = beatsin16( 13, 0, NUM_LEDS_2-1 );
-  leds_2[pos2] += CHSV( gHue, 255, 192);
-  Serial.println ("sinelon");
+  #ifdef TWO_STRINGS
+    fadeToBlackBy( leds_2, NUM_LEDS_2, 20);
+    int pos2 = beatsin16( 13, 0, NUM_LEDS_2-1 );
+    leds_2[pos2] += CHSV( gHue, 255, 192);
+    Serial.println ("sinelon");
+  #endif
 }
 
 void coolLikeIncandescent( CRGB& c, uint8_t phase)
@@ -395,7 +408,9 @@ void UpdatePalette (){
 
 void DoTwinkle (){
   drawTwinkles( leds_1);
-  drawTwinkles( leds_2);
+  #ifdef TWO_STRINGS
+    drawTwinkles( leds_2);
+  #endif
   FastLED.show();
 }
 
@@ -411,11 +426,15 @@ void setup() {
 
   // SET UP LEDS tell FastLED about the LED strip configuration
   FastLED.addLeds<LED_TYPE,DATA_PIN_1,COLOR_ORDER>(leds_1, NUM_LEDS_1).setCorrection(TypicalLEDStrip);
-  FastLED.addLeds<LED_TYPE,DATA_PIN_2,COLOR_ORDER>(leds_2, NUM_LEDS_2).setCorrection(TypicalLEDStrip);  
+  #ifdef TWO_STRINGS
+    FastLED.addLeds<LED_TYPE,DATA_PIN_2,COLOR_ORDER>(leds_2, NUM_LEDS_2).setCorrection(TypicalLEDStrip);  
+  #endif
   FastLED.setBrightness(BRIGHTNESS); // set master brightness control
   //Turn on 2 white LEDs so we know we're working.  
-  leds_2[0] = CRGB::White;
   leds_1[0] = CRGB::White;
+  #ifdef TWO_STRINGS
+    leds_2[0] = CRGB::White;
+  #endif
   FastLED.show();
 
   // SET UP WIFI 
@@ -491,7 +510,9 @@ void loop() {
   
   UpdatePalette(); //based on what we know, set the palette properly.
   drawTwinkles(leds_1);
-  drawTwinkles(leds_2);
+  #ifdef TWO_STRINGS
+    drawTwinkles(leds_2);
+  #endif 
   FastLED.show(); 
 }
 
