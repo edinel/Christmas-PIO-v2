@@ -194,7 +194,7 @@ label:after {
 }
 /**** OFF Radio button code ****/
 #radio-1 + label {
-    left: -81vw;
+    left: -87vw;
     background: #000000;
     border-color: #000000!important;
     animation-delay: 0s;
@@ -219,7 +219,7 @@ label:after {
 }
 /**** RED radio button code ****/
 #radio-2 + label {
-    left: -54vw;
+    left: -62vw;
     background: #EA4335;
     border-color: #EA4335!important;
     animation-delay: .2s;
@@ -247,7 +247,7 @@ label:after {
 }
 /**** BLUE radio button code ****/
 #radio-3 + label {
-    left: -27vw;
+    left: -37vw;
     background: #4285F4;
     animation-delay: .4s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
@@ -269,7 +269,7 @@ label:after {
 }
 /**** GREEN radio button code ****/
 #radio-4 + label {
-    left: 0vw;
+    left: -12vw;
     background: #34A853;
     animation-delay: .6s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
@@ -292,7 +292,7 @@ label:after {
 
 /**** Yellow radio button code ****/
 #radio-5 + label {
-    left: 27vw;
+    left: 13vw;
     background: #FFFF00;
     border-color: #FFFF00!important;
     animation-delay: .2s;
@@ -320,7 +320,7 @@ label:after {
 }
 /**** BLUE radio button code ****/
 #radio-6 + label {
-    left: 54vw;
+    left: 38vw;
     background: #00FFFF;
     animation-delay: .4s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
@@ -344,10 +344,10 @@ label:after {
 
 }
 
-/**** BLUE radio button code ****/
+/**** ORANGE radio button code ****/
 #radio-7 + label {
-    left: 81vw;
-    background: #ffffff;
+    left: 63vw;
+    background: #F75F1C;
     animation-delay: .4s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 
@@ -362,6 +362,33 @@ label:after {
 
 }
 #radio-7:checked + label:before {
+    animation-name: checked-radio-4;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+
+}
+
+
+/**** WHITE radio button code ****/
+#radio-8 + label {
+    left: 88vw;
+    background: #ffffff;
+    animation-delay: .4s;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+
+}
+#radio-8 + label:before {
+    /* background: #E91E63; */
+    transform: scale(0);
+    animation-name: unchecked-radio-4;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+
+}
+#radio-8:checked + label:before {
     animation-name: checked-radio-4;
     animation-duration: .4s;
     animation-timing-function: ease-in-out;

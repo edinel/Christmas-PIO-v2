@@ -42,12 +42,13 @@ String gHeader;
 // Overall twinkle speed.
 // 0 (VERY slow) to 8 (VERY fast).  
 // 4, 5, and 6 are recommended, default is 4.
-#define TWINKLE_SPEED 4
+#define TWINKLE_SPEED 2
+
 
 // Overall twinkle density.
 // 0 (NONE lit) to 8 (ALL lit at once).  
 // Default is 5.
-#define TWINKLE_DENSITY 5
+#define TWINKLE_DENSITY 4
 
 // How often to change color palettes.
 #define SECONDS_PER_PALETTE  30
@@ -355,10 +356,14 @@ bool RadioProcessor (Print& output, const char *param){
     output.print (isThisOn("cyan"));
     output.print("/>");
     output.print("<label for=\"radio-6\"></label>");
-    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-7\" name=\"selector\" value=\"white\"");
-    output.print (isThisOn("white"));
+    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-7\" name=\"selector\" value=\"orange\"");
+    output.print (isThisOn("orange"));
     output.print("/>");
     output.print("<label for=\"radio-7\"></label>");
+    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-8\" name=\"selector\" value=\"white\"");
+    output.print (isThisOn("white"));
+    output.print("/>");
+    output.print("<label for=\"radio-8\"></label>");
     output.print ("</div>\n");
     return true;
   }else{
@@ -380,6 +385,9 @@ void UpdatePalette (){
     gCurrentPalette = Snow_p;
   }else if (gButtonClicked == "white"){
     gCurrentPalette = FairyLight_p;
+  }else if (gButtonClicked == "orange"){
+    gCurrentPalette = Halloween_p; 
+    Serial.println ("well ok");
   }else{ //we're in an unknown state or "off"
     gCurrentPalette = Black_p;
   }
@@ -456,10 +464,11 @@ void loop() {
               gButtonClicked = "yellow";
             }else if (gHeader.indexOf("GET /update?color=cyan") >= 0) {
               gButtonClicked = "cyan";
+            }else if (gHeader.indexOf("GET /update?color=orange") >= 0) {
+              gButtonClicked = "orange";
             }else if (gHeader.indexOf("GET /update?color=white") >= 0) {
               gButtonClicked = "white";
             }
-            
             // Display the HTML web page, using the TemplatePrinter to make it a little easier to deal with.
             TemplatePrinter printer(client, RadioProcessor);  
             printer.print (index_html);

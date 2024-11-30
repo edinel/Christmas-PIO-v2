@@ -84,6 +84,20 @@ const TProgmemRGBPalette16 Ice_p FL_PROGMEM =
 };
 
 
+// A halloween themed palette
+#define Orange1 0x902C02
+#define Orange2 0x902C05
+#define Purple  0x301934
+const TProgmemRGBPalette16 Halloween_p FL_PROGMEM =
+{
+   Orange1, Orange2, Orange1, Orange2, 
+   Orange1, Orange2, Orange1, Orange2, 
+   Orange1, Orange2, Orange1, Orange2, 
+   Purple, Orange1, Orange2, Purple
+};
+
+
+
 // Add or remove palette names from this list to control which color
 // palettes are used, and in what order.
 const TProgmemRGBPalette16* ActivePaletteList[] = {
