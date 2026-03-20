@@ -1,0 +1,30 @@
+<!DOCTYPE HTML><html>
+<head>
+  <title>Backyard Sparkle Lights</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  %CSS_CODE%
+  </style>
+</head>
+<body>
+  <p>
+  %BOUNCE%
+  <p id="output"></p>
+
+  <script>
+    const radioButtons = document.querySelectorAll('input[name="selector"]');
+    for(const radioButton of radioButtons){
+      radioButton.addEventListener('change', showSelected);
+    }
+    function showSelected(e) {
+      var callback = new XMLHttpRequest();
+      if (this.checked) {
+        document.querySelector('#output').innerText = `You selected ${this.value}`;
+        callback.open("GET", "/update?color="+this.value, true);
+        callback.send();
+      }
+      console.log(e);
+    }
+  </script>
+</body>
+</html>
