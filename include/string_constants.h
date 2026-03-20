@@ -53,6 +53,28 @@ const char CSS_CODE[] PROGMEM = /* css */ R"rawliteral(
         top: -4vw;
     }
 }
+@keyframes dot-anim-row1 {
+    0% {
+        top: 16vh;
+    }
+    50% {
+        top: 24vh;
+    }
+    100% {
+        top: 16vh;
+    }
+}
+@keyframes dot-anim-row2 {
+    0% {
+        top: 61vh;
+    }
+    50% {
+        top: 69vh;
+    }
+    100% {
+        top: 61vh;
+    }
+}
 @keyframes checked-radio-3 {
     0% {
         top: -10vw;
@@ -193,9 +215,12 @@ label:after {
 }
 /**** OFF Radio button code ****/
 #radio-1 + label {
-    left: -87vw;
+    left: -83vw;
+    top: 20vh;
+    bottom: auto;
     background: #000000;
     border-color: #000000!important;
+    animation-name: dot-anim-row1;
     animation-delay: 0s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
@@ -218,9 +243,12 @@ label:after {
 }
 /**** RED radio button code ****/
 #radio-2 + label {
-    left: -62vw;
+    left: -50vw;
+    top: 20vh;
+    bottom: auto;
     background: #EA4335;
     border-color: #EA4335!important;
+    animation-name: dot-anim-row1;
     animation-delay: .2s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
@@ -246,8 +274,11 @@ label:after {
 }
 /**** BLUE radio button code ****/
 #radio-3 + label {
-    left: -37vw;
+    left: -17vw;
+    top: 20vh;
+    bottom: auto;
     background: #4285F4;
+    animation-name: dot-anim-row1;
     animation-delay: .4s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
@@ -268,8 +299,11 @@ label:after {
 }
 /**** GREEN radio button code ****/
 #radio-4 + label {
-    left: -12vw;
+    left: 17vw;
+    top: 20vh;
+    bottom: auto;
     background: #34A853;
+    animation-name: dot-anim-row1;
     animation-delay: .6s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
@@ -287,10 +321,13 @@ label:after {
 }
 /**** Yellow radio button code ****/
 #radio-5 + label {
-    left: 13vw;
+    left: 50vw;
+    top: 20vh;
+    bottom: auto;
     background: #FFFF00;
     border-color: #FFFF00!important;
-    animation-delay: .2s;
+    animation-name: dot-anim-row1;
+    animation-delay: .8s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-5:checked + label {
@@ -313,11 +350,14 @@ label:after {
     background: #FFFF00;
     box-shadow: none;
 }
-/**** BLUE radio button code ****/
+/**** CYAN radio button code ****/
 #radio-6 + label {
-    left: 38vw;
+    left: 83vw;
+    top: 20vh;
+    bottom: auto;
     background: #00FFFF;
-    animation-delay: .4s;
+    animation-name: dot-anim-row1;
+    animation-delay: 1s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-6 + label:before {
@@ -337,9 +377,12 @@ label:after {
 }
 /**** ORANGE radio button code ****/
 #radio-7 + label {
-    left: 63vw;
+    left: -80vw;
+    top: 65vh;
+    bottom: auto;
     background: #F75F1C;
-    animation-delay: .4s;
+    animation-name: dot-anim-row2;
+    animation-delay: .2s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-7 + label:before {
@@ -359,8 +402,11 @@ label:after {
 }
 /**** WHITE radio button code ****/
 #radio-8 + label {
-    left: 88vw;
+    left: -40vw;
+    top: 65vh;
+    bottom: auto;
     background: #ffffff;
+    animation-name: dot-anim-row2;
     animation-delay: .4s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
@@ -381,9 +427,12 @@ label:after {
 }
 /**** WARM GOLD radio button code ****/
 #radio-9 + label {
-    left: 113vw;
+    left: 0vw;
+    top: 65vh;
+    bottom: auto;
     background: #FFB300;
-    animation-delay: .4s;
+    animation-name: dot-anim-row2;
+    animation-delay: .6s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-9 + label:before {
@@ -402,9 +451,12 @@ label:after {
 }
 /**** HANUKKAH radio button code ****/
 #radio-10 + label {
-    left: 138vw;
+    left: 40vw;
+    top: 65vh;
+    bottom: auto;
     background: #1040C0;
-    animation-delay: .4s;
+    animation-name: dot-anim-row2;
+    animation-delay: .8s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-10 + label:before {
@@ -423,9 +475,12 @@ label:after {
 }
 /**** NORDIC WINTER radio button code ****/
 #radio-11 + label {
-    left: 163vw;
+    left: 80vw;
+    top: 65vh;
+    bottom: auto;
     background: #1A4060;
-    animation-delay: .4s;
+    animation-name: dot-anim-row2;
+    animation-delay: 1s;
     box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
 }
 #radio-11 + label:before {
