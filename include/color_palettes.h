@@ -142,5 +142,8 @@ const TProgmemRGBPalette16* ActivePaletteList[] = {
   &RedWhite_p,
   &Snow_p,
   &Holly_p,
-  &Ice_p  
+  &Ice_p,
+  &WarmGold_p,
+  &Hanukkah_p,
+  &NordicWinter_p
 };
