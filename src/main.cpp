@@ -380,6 +380,18 @@ bool RadioProcessor (Print& output, const char *param){
     output.print (isThisOn("white"));
     output.print("/>");
     output.print("<label for=\"radio-8\"></label>");
+    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-9\" name=\"selector\" value=\"gold\"");
+    output.print (isThisOn("gold"));
+    output.print("/>");
+    output.print("<label for=\"radio-9\"></label>");
+    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-10\" name=\"selector\" value=\"hanukkah\"");
+    output.print (isThisOn("hanukkah"));
+    output.print("/>");
+    output.print("<label for=\"radio-10\"></label>");
+    output.print("<input type=\"radio\" class=\"radio\" id=\"radio-11\" name=\"selector\" value=\"nordic\"");
+    output.print (isThisOn("nordic"));
+    output.print("/>");
+    output.print("<label for=\"radio-11\"></label>");
     output.print ("</div>\n");
     return true;
   }else{
@@ -402,7 +414,13 @@ void UpdatePalette (){
   }else if (gButtonClicked == "white"){
     gCurrentPalette = FairyLight_p;
   }else if (gButtonClicked == "orange"){
-    gCurrentPalette = Halloween_p; 
+    gCurrentPalette = Halloween_p;
+  }else if (gButtonClicked == "gold"){
+    gCurrentPalette = WarmGold_p;
+  }else if (gButtonClicked == "hanukkah"){
+    gCurrentPalette = Hanukkah_p;
+  }else if (gButtonClicked == "nordic"){
+    gCurrentPalette = NordicWinter_p;
   }else{ //we're in an unknown state or "off"
     gCurrentPalette = Black_p;
   }
@@ -502,6 +520,12 @@ void loop() {
               gButtonClicked = "orange";
             }else if (gHeader.indexOf("GET /update?color=white") >= 0) {
               gButtonClicked = "white";
+            }else if (gHeader.indexOf("GET /update?color=gold") >= 0) {
+              gButtonClicked = "gold";
+            }else if (gHeader.indexOf("GET /update?color=hanukkah") >= 0) {
+              gButtonClicked = "hanukkah";
+            }else if (gHeader.indexOf("GET /update?color=nordic") >= 0) {
+              gButtonClicked = "nordic";
             }
             // Display the HTML web page, using the TemplatePrinter to make it a little easier to deal with.
             TemplatePrinter printer(client, RadioProcessor);  

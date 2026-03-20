@@ -84,6 +84,38 @@ const TProgmemRGBPalette16 Ice_p FL_PROGMEM =
 };
 
 
+// A warm gold/amber palette evoking candlelight and golden ornaments
+#define WG_Amber  0xFF6600
+#define WG_Gold   0xFFAA00
+#define WG_Cream  0xFFE080
+#define WG_Warm   0xFF8800
+const TProgmemRGBPalette16 WarmGold_p FL_PROGMEM =
+{  WG_Amber, WG_Gold,  WG_Amber, WG_Gold,
+   WG_Gold,  WG_Warm,  WG_Gold,  WG_Amber,
+   WG_Cream, WG_Gold,  WG_Warm,  WG_Gold,
+   WG_Amber, WG_Cream, WG_Gold,  WG_Warm };
+
+// A Hanukkah palette: deep royal blue with silver-white accents
+#define Han_Blue   0x003090
+#define Han_Royal  0x1040C0
+#define Han_Silver 0xC0C8D0
+const TProgmemRGBPalette16 Hanukkah_p FL_PROGMEM =
+{  Han_Blue,   Han_Blue,   Han_Blue,   Han_Blue,
+   Han_Blue,   Han_Royal,  Han_Blue,   Han_Blue,
+   Han_Blue,   Han_Blue,   Han_Royal,  Han_Blue,
+   Han_Silver, Han_Blue,   Han_Blue,   Han_Silver };
+
+// A Nordic winter palette: deep teal, aurora purple, and cold ice white
+#define Nord_Teal   0x003060
+#define Nord_Deep   0x0A0A40
+#define Nord_Purple 0x401060
+#define Nord_Ice    0x80C0E0
+const TProgmemRGBPalette16 NordicWinter_p FL_PROGMEM =
+{  Nord_Teal,   Nord_Deep,   Nord_Teal,   Nord_Purple,
+   Nord_Teal,   Nord_Teal,   Nord_Purple, Nord_Teal,
+   Nord_Deep,   Nord_Teal,   Nord_Teal,   Nord_Purple,
+   Nord_Ice,    Nord_Teal,   Nord_Deep,   Nord_Teal };
+
 // A halloween themed palette
 #define Orange1 0x902C02
 #define Orange2 0x902C05

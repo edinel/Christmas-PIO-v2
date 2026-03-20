@@ -398,6 +398,72 @@ label:after {
 }
 
 
+/**** WARM GOLD radio button code ****/
+#radio-9 + label {
+    left: 113vw;
+    background: #FFB300;
+    animation-delay: .4s;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-9 + label:before {
+    transform: scale(0);
+    animation-name: unchecked-radio-4;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-9:checked + label:before {
+    animation-name: checked-radio-4;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+
+/**** HANUKKAH radio button code ****/
+#radio-10 + label {
+    left: 138vw;
+    background: #1040C0;
+    animation-delay: .4s;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-10 + label:before {
+    transform: scale(0);
+    animation-name: unchecked-radio-4;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-10:checked + label:before {
+    animation-name: checked-radio-4;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+
+/**** NORDIC WINTER radio button code ****/
+#radio-11 + label {
+    left: 163vw;
+    background: #1A4060;
+    animation-delay: .4s;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-11 + label:before {
+    transform: scale(0);
+    animation-name: unchecked-radio-4;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+#radio-11:checked + label:before {
+    animation-name: checked-radio-4;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0 0 .8vw 0, rgba(0, 0, 0, 0.239216) 0 .8vw .8vw 0;
+}
+
 [type="radio"] {
     display: none;
 }
