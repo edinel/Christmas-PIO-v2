@@ -39,6 +39,9 @@ int gLoopCounter = 0;
 
 bool debug = true;
 
+const unsigned long WIFI_CHECK_INTERVAL = 30000; // check WiFi every 30 seconds
+unsigned long gLastWifiCheck = 0;
+
 // Set web server port number to 80
 WiFiServer gWiFiServer(80);
 
@@ -147,7 +150,7 @@ void rainbow()
   #ifdef TWO_STRINGS
     fill_rainbow( leds_2, NUM_LEDS_2, gHue, 7);
   #endif
-  Serial.println ("Rainbow");
+  if (debug) { Serial.println ("Rainbow"); }
 }
 
 void addGlitter( fract8 chanceOfGlitter) 
@@ -165,7 +168,7 @@ void rainbowWithGlitter()
   // built-in FastLED rainbow, plus some random sparkly glitter
   rainbow();
   addGlitter(80);
-  Serial.println ("Rainbow with Glitter");
+  if (debug) { Serial.println ("Rainbow with Glitter"); }
 }
 
 void confetti() 
@@ -192,7 +195,7 @@ void sinelon()
     fadeToBlackBy( leds_2, NUM_LEDS_2, 20);
     int pos2 = beatsin16( 13, 0, NUM_LEDS_2-1 );
     leds_2[pos2] += CHSV( gHue, 255, 192);
-    Serial.println ("sinelon");
+    if (debug) { Serial.println ("sinelon"); }
   #endif
 }
 
@@ -439,7 +442,7 @@ void setup() {
   // SET UP WIFI 
    Connect_to_Wifi();  // Like it says
   if (debug) { Print_Wifi_Status(); }
-  sleep (3);
+  delay(3000);
   gWiFiServer.begin();
   FastLED.clear(); //we're exiting the setup, which means we got a wifi connection and the server's started, so turn off those lights.  
   FastLED.show();
@@ -448,6 +451,19 @@ void setup() {
 }
 
 void loop() {
+  // Periodically check WiFi and reconnect if dropped
+  unsigned long now = millis();
+  if (now - gLastWifiCheck >= WIFI_CHECK_INTERVAL) {
+    gLastWifiCheck = now;
+    if (WiFi.status() != WL_CONNECTED) {
+      Serial.println("WiFi lost, reconnecting...");
+      WiFi.disconnect();
+      Connect_to_Wifi();
+      gWiFiServer.begin();
+      if (debug) { Print_Wifi_Status(); }
+    }
+  }
+
   WiFiClient client = gWiFiServer.available();   // Listen for incoming clients
   if (client) {                             // If a new client connects,
     currentTime = millis();
